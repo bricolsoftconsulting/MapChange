@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+	<com.bricolsoftconsulting.mapchange.MyMapView
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:enabled="true"
+				android:clickable="true"
+				android:id="@+id/theMap" 
+				android:apiKey="ENTER_YOUR_GOOGLE_MAPS_API_KEY_HERE">
+	</com.bricolsoftconsulting.mapchange.MyMapView>
+	
+</LinearLayout>
