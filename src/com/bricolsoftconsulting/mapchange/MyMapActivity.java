@@ -68,28 +68,27 @@ public class MyMapActivity extends MapActivity
 		}
 	};
 	
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.map);
-        
-        // Populate the map member
-        mMapView = (MyMapView) findViewById(R.id.theMap);
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.map);
+    	
+		// Populate the map member
+		mMapView = (MyMapView) findViewById(R.id.theMap);
         
 		// Add overlay
 		mMapOverlay = new MyOverlay();
 		mMapView.getOverlays().add(mMapOverlay);
         
-        // Add zoom controls
+		// Add zoom controls
 		mMapView.setBuiltInZoomControls(true);
 		
-        // Add listeners
+		// Add listeners
 		mMapView.setOnChangeListener(new MapViewChangeListener());
 		mMapOverlay.setOnTapListener(new MapViewTapListener());
-		
-    }
+	}
 	
 	private class MapViewChangeListener implements MyMapView.OnChangeListener
 	{
