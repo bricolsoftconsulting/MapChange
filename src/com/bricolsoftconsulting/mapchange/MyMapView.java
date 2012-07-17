@@ -1,5 +1,5 @@
 /*
-Copyright 2011 Bricolsoft Consulting
+Copyright 2012 Bricolsoft Consulting
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,9 +15,6 @@ Copyright 2011 Bricolsoft Consulting
 */
 
 package com.bricolsoftconsulting.mapchange;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -47,8 +44,23 @@ public class MyMapView extends MapView
 	private boolean mIsTouched = false;
 	private GeoPoint mLastCenterPosition;
 	private int mLastZoomLevel;
-	private Timer mChangeDelayTimer = new Timer();
+	//private Timer mChangeDelayTimer = new Timer();
 	private MyMapView.OnChangeListener mChangeListener = null;
+	
+	// ------------------------------------------------------------------------
+	// RUNNABLES
+	// ------------------------------------------------------------------------
+	
+	private Runnable mOnChangeTask = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			if (mChangeListener != null) mChangeListener.onChange(mThis, getMapCenter(), mLastCenterPosition, getZoomLevel(), mLastZoomLevel);
+			mLastCenterPosition = getMapCenter();
+			mLastZoomLevel = getZoomLevel();			
+		}
+	};
 	
 	// ------------------------------------------------------------------------
 	// CONSTRUCTORS
@@ -121,18 +133,8 @@ public class MyMapView extends MapView
 	
 	private void resetMapChangeTimer()
 	{
-		mChangeDelayTimer.cancel();
-		mChangeDelayTimer = new Timer();
-		mChangeDelayTimer.schedule(new TimerTask()
-		{
-			@Override
-			public void run()
-			{
-				if (mChangeListener != null) mChangeListener.onChange(mThis, getMapCenter(), mLastCenterPosition, getZoomLevel(), mLastZoomLevel);
-				mLastCenterPosition = getMapCenter();
-				mLastZoomLevel = getZoomLevel();
-			}
-		}, mEventsTimeout);
+		MyMapView.this.removeCallbacks(mOnChangeTask);
+		MyMapView.this.postDelayed(mOnChangeTask, mEventsTimeout);
 	}
 	
 	// ------------------------------------------------------------------------

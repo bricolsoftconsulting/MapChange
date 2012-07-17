@@ -1,5 +1,5 @@
 /*
-Copyright 2011 Bricolsoft Consulting
+Copyright 2012 Bricolsoft Consulting
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -30,43 +30,6 @@ public class MyMapActivity extends MapActivity
 	MyMapView mMapView;
 	MyOverlay mMapOverlay;
 	Handler mHandler = new Handler();
-	
-	// Runnables
-	Runnable mOnMapTap = new Runnable()
-	{
-		public void run()
-		{
-			// Notify
-			Toast.makeText(MyMapActivity.this, "Map Tap", Toast.LENGTH_SHORT).show();
-		}
-	};
-	
-	Runnable mOnMapZoom = new Runnable()
-	{
-		public void run()
-		{
-			// Notify
-			Toast.makeText(MyMapActivity.this, "Map Zoom", Toast.LENGTH_SHORT).show();
-		}
-	};
-	
-	Runnable mOnMapPan = new Runnable()
-	{
-		public void run()
-		{
-			// Notify
-			Toast.makeText(MyMapActivity.this, "Map Pan", Toast.LENGTH_SHORT).show();
-		}
-	};
-	
-	Runnable mOnMapZoomPan = new Runnable()
-	{
-		public void run()
-		{
-			// Notify
-			Toast.makeText(MyMapActivity.this, "Map Zoom + Pan", Toast.LENGTH_SHORT).show();
-		}
-	};
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -99,15 +62,15 @@ public class MyMapActivity extends MapActivity
 			// Check values
 			if ((!newCenter.equals(oldCenter)) && (newZoom != oldZoom))
 			{
-				mHandler.post(mOnMapZoomPan);
+				Toast.makeText(MyMapActivity.this, "Map Zoom + Pan", Toast.LENGTH_SHORT).show();
 			}
 			else if (!newCenter.equals(oldCenter))
 			{
-				mHandler.post(mOnMapPan);
+				Toast.makeText(MyMapActivity.this, "Map Pan", Toast.LENGTH_SHORT).show();
 			}
 			else if (newZoom != oldZoom)
 			{
-				mHandler.post(mOnMapZoom);
+				Toast.makeText(MyMapActivity.this, "Map Zoom", Toast.LENGTH_SHORT).show();
 			}
 		}	
 	}
@@ -117,7 +80,7 @@ public class MyMapActivity extends MapActivity
 		@Override
 		public void onTap(MapView view, GeoPoint geoPoint)
 		{
-			mHandler.post(mOnMapTap);
+			Toast.makeText(MyMapActivity.this, "Map Tap", Toast.LENGTH_SHORT).show();
 		}
 	}
 
