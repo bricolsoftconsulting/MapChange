@@ -20,6 +20,7 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
@@ -42,8 +43,8 @@ public class MyMapActivity extends MapActivity
 		mMapView = (MyMapView) findViewById(R.id.theMap);
         
 		// Add overlay
-		mMapOverlay = new MyOverlay();
-		mMapView.getOverlays().add(mMapOverlay);
+		mMapOverlay = new MyOverlay(getBaseContext(), mMapView);
+		mMapView.getOverlays().add(mMapOverlay); 
         
 		// Add zoom controls
 		mMapView.setBuiltInZoomControls(true);
@@ -78,9 +79,22 @@ public class MyMapActivity extends MapActivity
 	private class MapViewTapListener implements MyOverlay.OnTapListener
 	{
 		@Override
-		public void onTap(MapView view, GeoPoint geoPoint)
+		public void onTap(GeoPoint p, MapView mapView)
 		{
+			// Display message
 			Toast.makeText(MyMapActivity.this, "Map Tap", Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onDoubleTap(GeoPoint p, MapView mapView)
+		{
+			// Reposition map
+			Point screenPoint = new Point();
+			mMapView.getProjection().toPixels(p, screenPoint);
+			mMapView.getController().zoomInFixing(screenPoint.x, screenPoint.y);
+			
+			// Display message
+			Toast.makeText(MyMapActivity.this, "Map Double Tap", Toast.LENGTH_SHORT).show();
 		}
 	}
 

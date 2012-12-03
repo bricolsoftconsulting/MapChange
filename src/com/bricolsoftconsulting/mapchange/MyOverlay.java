@@ -16,12 +16,53 @@ Copyright 2012 Bricolsoft Consulting
 
 package com.bricolsoftconsulting.mapchange;
 
+import android.content.Context;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
 public class MyOverlay extends Overlay
-{	
+{
+	private MapView mMapView = null;
+	private GestureDetector mGestureDetector = null;
+	private SimpleOnGestureListener mGestureListener = new SimpleOnGestureListener()
+	{
+		@Override
+		public boolean onSingleTapConfirmed(MotionEvent e)
+		{
+			if (mTapListener != null)
+			{
+				GeoPoint p = (GeoPoint)mMapView.getProjection().fromPixels((int)e.getRawX(), (int)e.getRawY());
+				mTapListener.onTap(p, mMapView);
+			}
+			return true;
+		}
+
+		public boolean onDoubleTap(MotionEvent e)
+		{
+			if (mTapListener != null)
+			{
+				GeoPoint p = (GeoPoint)mMapView.getProjection().fromPixels((int)e.getRawX(), (int)e.getRawY());
+				mTapListener.onDoubleTap(p, mMapView);
+			}
+			return true;
+		}
+	};
+	
+	// ------------------------------------------------------------------------
+	// CONSTRUCTOR
+	// ------------------------------------------------------------------------
+	
+	MyOverlay(Context context, MapView mapView)
+	{
+		mMapView = mapView;
+		mGestureDetector = new GestureDetector(context, mGestureListener);	
+	}
+	
 	// ------------------------------------------------------------------------
 	// LISTENER DEFINITIONS
 	// ------------------------------------------------------------------------
@@ -29,7 +70,8 @@ public class MyOverlay extends Overlay
 	// Tap listener
 	public interface OnTapListener
 	{
-		public void onTap(MapView v, GeoPoint geoPoint);
+		public void onTap(GeoPoint p, MapView mapView);
+		public void onDoubleTap(GeoPoint p, MapView mapView);
 	}
 	
 	// ------------------------------------------------------------------------
@@ -52,10 +94,8 @@ public class MyOverlay extends Overlay
 	// EVENT HANDLERS
 	// ------------------------------------------------------------------------
 	
-	@Override
-	public boolean onTap(GeoPoint geoPoint, MapView mapView)
+	public boolean onTouchEvent(MotionEvent motionEvent, MapView mapView)
 	{
-		mTapListener.onTap(mapView, geoPoint);
-		return super.onTap(geoPoint, mapView);
+		return mGestureDetector.onTouchEvent(motionEvent);
 	}
 }

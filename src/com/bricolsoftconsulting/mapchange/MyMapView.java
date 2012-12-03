@@ -19,7 +19,6 @@ package com.bricolsoftconsulting.mapchange;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.ViewConfiguration;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -41,7 +40,6 @@ public class MyMapView extends MapView
 	// ------------------------------------------------------------------------
 	
 	private MyMapView mThis;
-	private long lastTouchTime = -1;
 	private long mEventsTimeout = 250L; 	// Set this variable to your preferred timeout
 	private boolean mIsTouched = false;
 	private GeoPoint mLastCenterPosition;
@@ -113,23 +111,6 @@ public class MyMapView extends MapView
 		mIsTouched = (ev.getAction() != MotionEvent.ACTION_UP);
 
 		return super.onTouchEvent(ev);
-	}
-	// http://stackoverflow.com/a/9918657/356895
-	@Override
-	public boolean onInterceptTouchEvent(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			long thisTime = System.currentTimeMillis();
-			if (thisTime - lastTouchTime < ViewConfiguration.getDoubleTapTimeout()) {
-				// Recognized double tap.
-				getController().zoomInFixing((int)event.getX(), (int)event.getY());
-				lastTouchTime = -1;
-			}
-			else {
-				// Double tap was to slow.
-				lastTouchTime = thisTime;
-			}
-		}
-		return super.onInterceptTouchEvent(event);
 	}
 
 	@Override
