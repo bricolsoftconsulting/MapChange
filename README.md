@@ -21,6 +21,7 @@ Pan, zoom or pinch the map. The app will tell you what you just did (panned, zoo
 Credits
 -------
 Thanks to [Dave Smith](https://github.com/devunwired) for suggesting the use of View.postDelayed instead of a timer so the change events are not launched on the timer's background thread. His wonderful suggestion has been incorporated in this code.
+Thanks to [Tobias](https://github.com/johnjohndoe) for his patch to support map zooming via double tap.
 
 Copyright
 ---------
