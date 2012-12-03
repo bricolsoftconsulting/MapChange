@@ -26,7 +26,7 @@ Thanks to [Tobias](https://github.com/johnjohndoe) for his patch to support map 
 
 Copyright
 ---------
-Copyright 2011 Bricolsoft Consulting
+Copyright 2012 Bricolsoft Consulting
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
