@@ -1,5 +1,5 @@
 /*
-Copyright 2012 Bricolsoft Consulting
+Copyright 2013 Bricolsoft Consulting
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -52,32 +52,32 @@ public class MyOverlay extends Overlay
 			return true;
 		}
 	};
-	
+
 	// ------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ------------------------------------------------------------------------
-	
-	MyOverlay(Context context, MapView mapView)
+
+	public MyOverlay(Context context, MapView mapView)
 	{
 		mMapView = mapView;
-		mGestureDetector = new GestureDetector(context, mGestureListener);	
+		mGestureDetector = new GestureDetector(context, mGestureListener);
 	}
-	
+
 	// ------------------------------------------------------------------------
 	// LISTENER DEFINITIONS
 	// ------------------------------------------------------------------------
-	
+
 	// Tap listener
 	public interface OnTapListener
 	{
 		public void onTap(GeoPoint p, MapView mapView);
 		public void onDoubleTap(GeoPoint p, MapView mapView);
 	}
-	
+
 	// ------------------------------------------------------------------------
 	// GETTERS / SETTERS
 	// ------------------------------------------------------------------------
-	
+
 	// Setters
 	public void setOnTapListener(OnTapListener listener)
 	{
@@ -87,13 +87,13 @@ public class MyOverlay extends Overlay
 	// ------------------------------------------------------------------------
 	// MEMBERS
 	// ------------------------------------------------------------------------
-	
+
 	private OnTapListener mTapListener;
-	
+
 	// ------------------------------------------------------------------------
 	// EVENT HANDLERS
 	// ------------------------------------------------------------------------
-	
+
 	public boolean onTouchEvent(MotionEvent motionEvent, MapView mapView)
 	{
 		return mGestureDetector.onTouchEvent(motionEvent);

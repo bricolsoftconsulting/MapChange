@@ -4,14 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    
+
 	<com.bricolsoftconsulting.mapchange.MyMapView
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:enabled="true"
 				android:clickable="true"
-				android:id="@+id/theMap" 
-				android:apiKey="ENTER_YOUR_GOOGLE_MAPS_API_KEY_HERE">
+				android:id="@+id/theMap"
+				android:apiKey="@string/google_maps_api_key">
 	</com.bricolsoftconsulting.mapchange.MyMapView>
-	
+
 </LinearLayout>
