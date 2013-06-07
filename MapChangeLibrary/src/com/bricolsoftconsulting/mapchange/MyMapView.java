@@ -1,5 +1,5 @@
 /*
-Copyright 2012 Bricolsoft Consulting
+Copyright 2013 Bricolsoft Consulting
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,21 +24,21 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 
 public class MyMapView extends MapView
-{	
+{
 	// ------------------------------------------------------------------------
 	// LISTENER DEFINITIONS
 	// ------------------------------------------------------------------------
-	
+
 	// Change listener
 	public interface OnChangeListener
 	{
 		public void onChange(MapView view, GeoPoint newCenter, GeoPoint oldCenter, int newZoom, int oldZoom);
 	}
-	
+
 	// ------------------------------------------------------------------------
 	// MEMBERS
 	// ------------------------------------------------------------------------
-	
+
 	private MyMapView mThis;
 	private long mEventsTimeout = 250L; 	// Set this variable to your preferred timeout
 	private boolean mIsTouched = false;
@@ -46,11 +46,11 @@ public class MyMapView extends MapView
 	private int mLastZoomLevel;
 	//private Timer mChangeDelayTimer = new Timer();
 	private MyMapView.OnChangeListener mChangeListener = null;
-	
+
 	// ------------------------------------------------------------------------
 	// RUNNABLES
 	// ------------------------------------------------------------------------
-	
+
 	private Runnable mOnChangeTask = new Runnable()
 	{
 		@Override
@@ -58,43 +58,43 @@ public class MyMapView extends MapView
 		{
 			if (mChangeListener != null) mChangeListener.onChange(mThis, getMapCenter(), mLastCenterPosition, getZoomLevel(), mLastZoomLevel);
 			mLastCenterPosition = getMapCenter();
-			mLastZoomLevel = getZoomLevel();			
+			mLastZoomLevel = getZoomLevel();
 		}
 	};
-	
+
 	// ------------------------------------------------------------------------
 	// CONSTRUCTORS
 	// ------------------------------------------------------------------------
-	
+
 	public MyMapView(Context context, String apiKey)
 	{
 		super(context, apiKey);
 		init();
 	}
-	
+
 	public MyMapView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		init();
 	}
-	
+
 	public MyMapView(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
 		init();
 	}
-	
+
 	private void init()
 	{
 		mThis = this;
 		mLastCenterPosition = this.getMapCenter();
 		mLastZoomLevel = this.getZoomLevel();
 	}
-	
+
 	// ------------------------------------------------------------------------
 	// GETTERS / SETTERS
 	// ------------------------------------------------------------------------
-	
+
 	public void setOnChangeListener(MyMapView.OnChangeListener l)
 	{
 		mChangeListener = l;
@@ -103,10 +103,10 @@ public class MyMapView extends MapView
 	// ------------------------------------------------------------------------
 	// EVENT HANDLERS
 	// ------------------------------------------------------------------------
-	
+
 	@Override
 	public boolean onTouchEvent(MotionEvent ev)
-	{		
+	{
 		// Set touch internal
 		mIsTouched = (ev.getAction() != MotionEvent.ACTION_UP);
 
@@ -117,11 +117,11 @@ public class MyMapView extends MapView
 	public void computeScroll()
 	{
 		super.computeScroll();
-		
+
 		// Check for change
 		if (isSpanChange() || isZoomChange())
 		{
-			// If computeScroll called before timer counts down we should drop it and 
+			// If computeScroll called before timer counts down we should drop it and
 			// start counter over again
 			resetMapChangeTimer();
 		}
@@ -130,25 +130,25 @@ public class MyMapView extends MapView
 	// ------------------------------------------------------------------------
 	// TIMER RESETS
 	// ------------------------------------------------------------------------
-	
+
 	private void resetMapChangeTimer()
 	{
 		MyMapView.this.removeCallbacks(mOnChangeTask);
 		MyMapView.this.postDelayed(mOnChangeTask, mEventsTimeout);
 	}
-	
+
 	// ------------------------------------------------------------------------
 	// CHANGE FUNCTIONS
 	// ------------------------------------------------------------------------
-	
+
 	private boolean isSpanChange()
 	{
 		return !mIsTouched && !getMapCenter().equals(mLastCenterPosition);
 	}
-	
+
 	private boolean isZoomChange()
 	{
 		return (getZoomLevel() != mLastZoomLevel);
 	}
-	
+
 }
