@@ -57,7 +57,7 @@ public class MyOverlay extends Overlay
 	// CONSTRUCTOR
 	// ------------------------------------------------------------------------
 
-	MyOverlay(Context context, MapView mapView)
+	public MyOverlay(Context context, MapView mapView)
 	{
 		mMapView = mapView;
 		mGestureDetector = new GestureDetector(context, mGestureListener);
