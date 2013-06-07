@@ -11,9 +11,9 @@ Installation
 To setup this project:
 
 1. Download a copy of this code.
-1. Edit the `map.xml` file in `/res/layout` to add your Google Maps API Key on this line:
+1. Edit the `apikeys.xml` file in `/res/values` to add your Google Maps API Key on this line:
 
-    android:apiKey="ENTER_GOOGLE_MAPS_API_KEY_HERE"
+    `google_maps_api_key="ENTER_GOOGLE_MAPS_API_KEY_HERE"`
 
 Usage
 -----
